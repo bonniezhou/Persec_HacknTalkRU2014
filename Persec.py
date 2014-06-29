@@ -20,21 +20,34 @@ def total_danger(gps_x, gps_y, crime_file):
 			crime_y = float(row[10])
 
 			if within_radius(gps_x, gps_y, crime_x, crime_y):
-				total = total + 1
+				total = total + float(row[14])
 	return total
 
 #get_score: float float -> int[0,4]
 def get_score(x, y):
-	danger = total_danger(x, y, crime_file="crimes_final.csv")
+	danger = total_danger(x, y, crime_file="CrimeRatesWithScore.csv")
 
-	if total_danger < 2000:
+	if danger < 2000:
 		return 0
-	elif 2000 <= total_danger <= 4000:
+	elif danger < 4000:
 		return 1
-	elif 4000 <= total_danger <= 8000:
+	elif danger < 8000:
 		return 2
-	elif 8000 <= total_danger <= 16000:
+	elif danger < 16000:
 		return 3
 	else:
 		return 4
+
+
+def test():
+	scores = {0:0, 1:0, 2:0, 3:0, 4:0}
+	x = -122.512
+	while x < -122.37:
+		y = 37.71
+		while y < 37.815:
+			scores[get_score(x,y)] = scores[get_score(x, y)] + 1
+			print total_danger(x, y, crime_file="CrimeRatesWithScore.csv")
+			y = y + 0.01
+		x = x + 0.01
+	return scores
 	
