@@ -46,7 +46,8 @@ def test():
 		y = 37.71
 		while y < 37.815:
 			scores[get_score(x,y)] = scores[get_score(x, y)] + 1
-			print total_danger(x, y, crime_file="CrimeRatesWithScore.csv")
+			if get_score(x, y) == 1:
+				print x, y
 			y = y + 0.01
 		x = x + 0.01
 	return scores
